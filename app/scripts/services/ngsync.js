@@ -62,6 +62,7 @@ angular.module('RTDemoApp')
 
           scope.$digest();
         });
+
         dpd[config.collection].on('update', function (doc) {});
 
         //Push changes
