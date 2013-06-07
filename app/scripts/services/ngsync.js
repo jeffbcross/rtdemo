@@ -6,29 +6,77 @@ angular.module('RTDemoApp')
       var scope = config.scope
         , lastUpdate;
 
-      //Get initial object from server
-      dpd[config.collection].get(config.id, function (value) {
-        scope[config.modelName] = value;
-        scope.$digest();
-      });
-      
-      //Listen for changes
-      dpd[config.collection].on('update:' + config.id, function (message) {
-        scope[config.modelName] = message;
-        lastUpdate = angular.copy(message);
-        scope.$digest();
-      });
-
-      //Push changes
-      scope.$watch(config.modelName, function (newVal, oldVal) {
-        if (!angular.equals(newVal, oldVal) && !angular.equals(newVal, lastUpdate)) {
-          dpd[config.collection].put(config.id, newVal);  
-        }
+      //Synchronize a single object
+      if (config.id) {
+        //Get initial object from server
+        dpd[config.collection].get(config.id, function (value) {
+          scope[config.modelName] = value;
+          scope.$digest();
+        });
         
-      }, true);
+        //Listen for changes
+        dpd[config.collection].on('update:' + config.id, function (message) {
+          scope[config.modelName] = message;
+          lastUpdate = angular.copy(message);
+          scope.$digest();
+        });
+        //Push changes
+        scope.$watch(config.modelName, function (newVal, oldVal) {
+          if (!angular.equals(newVal, oldVal) && !angular.equals(newVal, lastUpdate)) {
+            dpd[config.collection].put(config.id, newVal);  
+          }
+          
+        }, true);
+      }
+      else {
+        dpd[config.collection].get(function (models) {
+          scope[config.modelName] = models;
+          scope.$digest();
+        });
+
+
+        //Listen for changes
+        
+        dpd[config.collection].on('create', function (doc) {
+          if (Array.isArray(scope[config.modelName])) {
+            scope[config.modelName].push(doc);
+          }
+          else {
+            scope[config.modelName] = [doc];
+          }
+
+          scope.$digest();
+        });
+
+        dpd[config.collection].on('delete', function (doc) {
+          console.log('deleted');
+          var found;
+          scope[config.modelName].forEach(function (item, i, list) {
+            // found && return;
+            if (item.id === doc.id) {
+              console.log('found deleted');
+              list.splice(i,1);
+              found = true;
+            }
+          });
+
+          scope.$digest();
+        });
+        dpd[config.collection].on('update', function (doc) {});
+
+        //Push changes
+        scope.$watch(config.modelName, function (newVal, oldVal) {
+          if (newVal && !Array.isArray(newVal)) throw new Error("Synced models without an id must be an Array.");
+
+          //TODO
+          
+        }, true);
+      }
+      
+
+      
     }
 
-    // Public API here
     return function (config) {
       return new Synchronizer(config);
     }

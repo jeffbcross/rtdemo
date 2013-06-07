@@ -3,15 +3,22 @@ body {
   background: #eee;
 }
 
-.container {
-  
+.container .doc-list li {
+  padding: 15px;
+  border-bottom: 1px solid #CCC;
+  font-size: 125%;
+  cursor: pointer;
+}
+
+.container .doc-list li.selected {
+  background-color: #CCC;
+  color: #fff;
 }
 
 .container textarea {
   border: none;
   border: #ddd 1px outset;
   height: 900px;
-  margin: 30px auto;
   font-size: 200%;
   line-height: 100%;
 }

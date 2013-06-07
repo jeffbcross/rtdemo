@@ -1,10 +1,8 @@
 <div class="row">
-  <div class="span10 offset 1">
-    <h1>Switches</h1>
-    <input type="checkbox" ng-model="doc.on">
-    Check Me
+  <div class="span3">
+    <ul class="unstyled doc-list">
+      <li ng-click="openDoc(doc.id)" ng-repeat="doc in docs" ng-class="{selected: active == doc.id }">{{doc.title | limitTo:10}}</li>
+    </ul>
   </div>
-</div>
-<div class="row">
-  <textarea class="span10 offset1" ng-model="doc.body"></textarea>
+  <textarea class="span9 pull-right" ng-model="doc.body"></textarea>
 </div>
