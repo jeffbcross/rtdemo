@@ -1,13 +1,10 @@
 'use strict';
 
 angular.module('RTDemoApp')
-  .controller('MainCtrl', function ($scope, ngSync) {
-    console.log('typeof', typeof ngSync);
-    console.log('ngSync', ngSync);
-    
+  .controller('MainCtrl', function ($scope, ngSync, $routeParams) {
     ngSync({
       scope: $scope,
-      id:'c318b43da623882c',
+      id: $routeParams.id,
       collection: 'documents',
       modelName: 'doc'
     });

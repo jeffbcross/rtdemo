@@ -3,7 +3,7 @@
 angular.module('RTDemoApp', [])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
+      .when('/:id', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })

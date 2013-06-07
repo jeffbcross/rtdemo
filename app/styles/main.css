@@ -10,6 +10,6 @@ body {
 .container textarea {
   border: none;
   border: #ddd 1px outset;
-  height: 800px;
+  height: 300px;
   margin: 30px auto;
 }

@@ -8,6 +8,14 @@
 			"required": false,
 			"id": "body",
 			"order": 0
+		},
+		"on": {
+			"name": "on",
+			"type": "boolean",
+			"typeLabel": "boolean",
+			"required": false,
+			"id": "on",
+			"order": 1
 		}
 	}
 }

@@ -5,25 +5,25 @@ angular.module('RTDemoApp')
     function Synchronizer (config) {
       var scope = config.scope;
 
-      //Get initial object
+      //Get initial object from server
       dpd[config.collection].get(config.id, function (value) {
-        console.log('loaded value', value);
-        console.log('config.modelName', config.modelName);
-        scope[config.modelName] = value.body;
+        scope[config.modelName] = value;
         scope.$digest();
-      })
+      });
       
       //Listen for changes
       dpd[config.collection].on('update:' + config.id, function (message) {
-        console.log('updated?', message.body);
-        scope[config.modelName] = message.body;
+        scope[config.modelName] = message;
         scope.$digest();
       });
 
       //Push changes
-      scope.$watch(config.modelName, function (newVal) {
-        dpd[config.collection].put(config.id, {body: newVal});
-      });
+      scope.$watch(config.modelName, function (newVal, oldVal) {
+        if (!angular.equals(newVal, oldVal)) {
+          dpd[config.collection].put(config.id, newVal);  
+        }
+        
+      }, true);
     }
 
     // Public API here
