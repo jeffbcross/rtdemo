@@ -36,7 +36,6 @@ angular.module('RTDemoApp')
 
 
         //Listen for changes
-        
         dpd[config.collection].on('create', function (doc) {
           if (Array.isArray(scope[config.modelName])) {
             scope[config.modelName].push(doc);
@@ -49,12 +48,10 @@ angular.module('RTDemoApp')
         });
 
         dpd[config.collection].on('delete', function (doc) {
-          console.log('deleted');
           var found;
           scope[config.modelName].forEach(function (item, i, list) {
-            // found && return;
+            if(found) return;
             if (item.id === doc.id) {
-              console.log('found deleted');
               list.splice(i,1);
               found = true;
             }
@@ -63,7 +60,18 @@ angular.module('RTDemoApp')
           scope.$digest();
         });
 
-        dpd[config.collection].on('update', function (doc) {});
+        dpd[config.collection].on('update', function (doc) {
+          var found;
+          scope[config.modelName].forEach(function (item, i, list) {
+            if(found) return;
+            if (item.id === doc.id) {
+              list[i] = doc;
+              found = true;
+            }
+          });
+
+          scope.$digest();
+        });
 
         //Push changes
         scope.$watch(config.modelName, function (newVal, oldVal) {
