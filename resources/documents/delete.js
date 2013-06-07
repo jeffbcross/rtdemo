@@ -1,0 +1,1 @@
+emit('documents:delete', this);
