@@ -16,6 +16,14 @@
 			"required": false,
 			"id": "on",
 			"order": 1
+		},
+		"lastEditor": {
+			"name": "lastEditor",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "lastEditor",
+			"order": 2
 		}
 	}
 }
