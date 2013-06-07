@@ -1,0 +1,15 @@
+/* Will be compiled down to a single stylesheet with your sass files */
+body {
+  background: #eee;
+}
+
+.container {
+  
+}
+
+.container textarea {
+  border: none;
+  border: #ddd 1px outset;
+  height: 800px;
+  margin: 30px auto;
+}

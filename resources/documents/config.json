@@ -1,0 +1,13 @@
+{
+	"type": "Collection",
+	"properties": {
+		"body": {
+			"name": "body",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "body",
+			"order": 0
+		}
+	}
+}
