@@ -9,29 +9,13 @@
 			"id": "body",
 			"order": 0
 		},
-		"on": {
-			"name": "on",
-			"type": "boolean",
-			"typeLabel": "boolean",
-			"required": false,
-			"id": "on",
-			"order": 1
-		},
-		"lastEditor": {
-			"name": "lastEditor",
-			"type": "string",
-			"typeLabel": "string",
-			"required": false,
-			"id": "lastEditor",
-			"order": 2
-		},
 		"title": {
 			"name": "title",
 			"type": "string",
 			"typeLabel": "string",
 			"required": false,
 			"id": "title",
-			"order": 3
+			"order": 1
 		}
 	}
 }

@@ -3,19 +3,19 @@ body {
   background: #eee;
 }
 
-.container .doc-list li {
+.container-fluid .doc-list li {
   padding: 15px;
   border-bottom: 1px solid #CCC;
   font-size: 125%;
   cursor: pointer;
 }
 
-.container .doc-list li.selected {
+.container-fluid .doc-list li.selected {
   background-color: #CCC;
   color: #fff;
 }
 
-.container textarea {
+.container-fluid textarea {
   border: none;
   border: #ddd 1px outset;
   height: 900px;

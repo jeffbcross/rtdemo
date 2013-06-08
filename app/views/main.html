@@ -1,14 +1,14 @@
-<div class="row">
-  <div class="span3">
+<div class="row-fluid">
+  <div class="span4">
     <ul class="unstyled doc-list">
       <li ng-click="openDoc(doc.id)" ng-repeat="doc in docs" ng-class="{selected: active == doc.id }">{{doc.title | limitTo:10}}</li>
     </ul>
   </div>
-  <div class="span9 pull-right">
+  <div class="span8 pull-right">
     <h1 ng-click="editing = true" ng-show="!editing">{{ doc.title }}</h1>
     <form ng-submit="editing = !editing">
       <input ng-model="doc.title" ng-show="editing">
     </form>
-    <textarea class="span9 pull-right" ng-model="doc.body"></textarea>
+    <textarea class="span12 pull-right" ng-model="doc.body"></textarea>
   </div>
 </div>

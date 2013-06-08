@@ -1,89 +1,95 @@
 'use strict';
 
 angular.module('RTDemoApp')
-  .factory('ngSync', function ($rootScope) {
+  .factory('$syncResource', function ($rootScope) {
     function Synchronizer (config) {
       var scope = config.scope
-        , lastUpdate;
+        , lastUpdate
+        , transport = Object.create(config.Transport.prototype);
 
-      //Synchronize a single object
-      if (config.id) {
+      config.Transport.call(transport, config);
+
+      var bindToObject = function () {
         //Get initial object from server
-        dpd[config.collection].get(config.id, function (value) {
-          scope[config.modelName] = value;
+        transport.getObject(config.id, function (obj) {
+          scope[config.model] = obj;
           scope.$digest();
         });
         
         //Listen for changes
-        dpd[config.collection].on('update:' + config.id, function (message) {
-          scope[config.modelName] = message;
+        transport.subscribeToObject(config.id, function (message) {
+          scope[config.model] = message;
           lastUpdate = angular.copy(message);
           scope.$digest();
         });
+        
         //Push changes
-        scope.$watch(config.modelName, function (newVal, oldVal) {
+        scope.$watch(config.model, function (newVal, oldVal) {
           if (!angular.equals(newVal, oldVal) && !angular.equals(newVal, lastUpdate)) {
-            dpd[config.collection].put(config.id, newVal);  
+            transport.updateObject(config.id, newVal);
           }
           
         }, true);
       }
-      else {
-        dpd[config.collection].get(function (models) {
-          scope[config.modelName] = models;
+
+      var bindToCollection = function () {
+        transport.getCollection(function (models) {
+          scope[config.model] = models;
           scope.$digest();
         });
-
-
-        //Listen for changes
-        dpd[config.collection].on('create', function (doc) {
-          if (Array.isArray(scope[config.modelName])) {
-            scope[config.modelName].push(doc);
+        
+        transport.subscribeToCollection(function (event, model) {
+          switch (event) {
+            case 'create':
+              if (Array.isArray(scope[config.model])) {
+                scope[config.model].push(model);
+              }
+              else {
+                scope[config.model] = [model];
+              }    
+              break;
+            case 'delete':
+              var found;
+              scope[config.model].forEach(function (item, i, list) {
+                if(found) return;
+                if (item.id === model.id) {
+                  list.splice(i, 1);
+                  found = true;
+                }
+              });
+              break;
+            case 'update':
+              var found;
+              scope[config.model].forEach(function (item, i, list) {
+                if(found) return;
+                if (item.id === model.id) {
+                  list[i] = model;
+                  found = true;
+                }
+              });
+              break;
+            default:
+              //NOOP
           }
-          else {
-            scope[config.modelName] = [doc];
-          }
-
-          scope.$digest();
-        });
-
-        dpd[config.collection].on('delete', function (doc) {
-          var found;
-          scope[config.modelName].forEach(function (item, i, list) {
-            if(found) return;
-            if (item.id === doc.id) {
-              list.splice(i,1);
-              found = true;
-            }
-          });
-
-          scope.$digest();
-        });
-
-        dpd[config.collection].on('update', function (doc) {
-          var found;
-          scope[config.modelName].forEach(function (item, i, list) {
-            if(found) return;
-            if (item.id === doc.id) {
-              list[i] = doc;
-              found = true;
-            }
-          });
 
           scope.$digest();
         });
 
         //Push changes
-        scope.$watch(config.modelName, function (newVal, oldVal) {
+        scope.$watch(config.model, function (newVal, oldVal) {
           if (newVal && !Array.isArray(newVal)) throw new Error("Synced models without an id must be an Array.");
 
           //TODO
           
         }, true);
-      }
-      
+      };
 
-      
+      if (config.id) {
+        bindToObject();
+      }
+      else {
+        bindToCollection();
+      }
     }
 
     return function (config) {
