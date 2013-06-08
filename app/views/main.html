@@ -5,9 +5,9 @@
     </ul>
   </div>
   <div class="span8 pull-right">
-    <h1 ng-click="editing = true" ng-show="!editing">{{ doc.title }}</h1>
+    <h1 class="title" ng-click="editing = true" ng-show="!editing">{{ doc.title }}</h1>
     <form ng-submit="editing = !editing">
-      <input ng-model="doc.title" ng-show="editing">
+      <input ng-model="doc.title" ng-show="editing" class="title">
     </form>
     <textarea class="span12 pull-right" ng-model="doc.body"></textarea>
   </div>
