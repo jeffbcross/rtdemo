@@ -3,11 +3,11 @@
 angular.module('RTDemoApp', [])
   .config(function ($routeProvider) {
     $routeProvider
-      .when('/:id', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+      .when('/docs/:id', {
+        templateUrl: 'views/docs.html',
+        controller: 'DocsCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/docs'
       });
   });

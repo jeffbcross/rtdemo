@@ -1,11 +1,10 @@
 'use strict';
 
 angular.module('RTDemoApp')
-  .controller('MainCtrl', function ($scope, $syncResource, $routeParams, $location, syncDeployd) {
-    
+  .controller('DocsCtrl', function ($scope, $syncResource, $routeParams, $location, syncDeployd) {
     $scope.openDoc = function (id) {
       if (id && typeof id === 'string') {
-        $location.path('/'+id);
+        $location.path('/docs/'+id);
       }
     };
 
