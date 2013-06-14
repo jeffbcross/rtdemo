@@ -1,0 +1,8 @@
+<ul>
+  <li ng-repeat="item in items">{{item.name}}: {{item.desc}}</li>
+</ul>
+<form ng-submit="items.add(item)">
+  <input type="text" ng-model="item.name" placeholder="Name" required/>
+  <input type="text" ng-model="item.desc" placeholder="Description"/>
+  <input type="submit">
+</form>
