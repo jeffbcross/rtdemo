@@ -19,6 +19,10 @@ angular.module('RTDemoApp', ['firebase', 'SyncResource', 'SyncDeployd'])
         templateUrl: 'views/firebase.html',
         controller: 'FirebaseCtrl'
       })
+      .when('/spreadsheet', {
+        templateUrl: 'views/spreadsheet.html',
+        controller: 'SpreadsheetCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });

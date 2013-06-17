@@ -1,0 +1,36 @@
+<table class="table table-striped row-fluid">
+  <tbody>
+    <form ng-submit="addItem(item)" class="form-inline form">
+      <tr>
+        <td>
+          <input ng-model="item.name" placeholder="item name">
+        </td>
+        <td>
+          <input ng-model="item.description" placeholder="item description">
+        </td>
+        <td colspan="2">
+          <button type="submit">Save</button>
+        </td>
+      </tr>
+    </form>
+    <tr ng-repeat="i in items">
+      <td>
+        <span ng-bind="i.name" ng-show="!edit"></span>
+        <input ng-model="i.name" ng-show="edit" type="text">
+      </td>
+      <td>
+        <span ng-bind="i.description" ng-show="!edit"></span>
+        <input ng-model="i.description" ng-show="edit" type="text">
+      </td>
+      <td>
+        <a ng-show="!edit" ng-click="edit = true">
+          edit
+        </a>
+        <a ng-show="edit" ng-click="edit = null">
+          stop editing
+        </a>
+      </td>
+      <td><a ng-click="removeItem(i.id)">delete</a></td>
+    </tr>
+  </tbody>
+</table>
