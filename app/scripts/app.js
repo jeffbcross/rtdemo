@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('RTDemoApp', ['firebase', 'SyncResource'])
+angular.module('RTDemoApp', ['firebase', 'SyncResource', 'SyncDeployd'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {

@@ -18,3 +18,6 @@ Subscribes to all changes on a collection, evokes callback with updates.
     subscribeToObject(id:*, callback:Function)
     unsubscribeFromObject(id)
     updateObject(id, value)
+
+
+subscribe(query, callback);

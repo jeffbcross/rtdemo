@@ -6,25 +6,22 @@ angular.module('RTDemoApp')
       $location.path('/docs/' + id);
     };
 
-    var deployd = Object.create(syncDeployd.prototype);
-    syncDeployd.call(deployd, {
-      path: 'documents'
+    var deployd = syncDeployd();
+    var syncer = $syncResource({
+      protocol: deployd,
+      scope: $scope
     });
 
     $scope.active = $routeParams.id;
 
-    var docResource = $syncResource({
-      scope: $scope,
-      id: $scope.active,
-      path: 'documents',
-      model: 'doc',
-      protocol: deployd,
-    });
-
-    var docsResource = $syncResource({
-      scope: $scope,
-      path: 'documents',
-      model: 'docs',
-      protocol: deployd
-    });
+    if ($scope.active) {
+      $scope.doc = syncer.bind({
+        path: 'documents',
+        id: $scope.active
+      }, 'doc');
+    }
+    
+    $scope.docs = syncer.bind({
+      path: 'documents'
+    }, 'docs');
   });
