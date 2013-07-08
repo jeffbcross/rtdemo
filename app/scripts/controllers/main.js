@@ -5,6 +5,7 @@ angular.module('RTDemoApp')
     $scope.awesomeThings = [
       'docs',
       'firebase',
-      'spreadsheet'
+      'spreadsheet',
+      'arduino'
     ];
   });

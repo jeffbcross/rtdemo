@@ -1,7 +1,33 @@
+<label for="protocol">Active Protocol:</label>
+<select name="protocol" ng-model="protocol">
+  <option ng-repeat="protocol in protocols" value="{{protocol.name}}">{{protocol.name}}
+</select>
 <table class="table table-striped row-fluid">
+  <thead>
+    <tr>
+      <th>
+        id
+      </th>
+      <th>
+        name
+      </th>
+      <th>
+        description
+      </th>
+      <th>
+        edit
+      </th>
+      <th>
+        delete
+      </th>
+    </tr>
+  </thead>
   <tbody>
     <form ng-submit="addItem(item)" class="form-inline form">
       <tr>
+        <td>
+          &nbsp;
+        </td>
         <td>
           <input ng-model="item.name" placeholder="item name">
         </td>
@@ -14,6 +40,9 @@
       </tr>
     </form>
     <tr ng-repeat="i in items">
+      <td>
+        {{ i.id }}
+      </td>
       <td>
         <span ng-bind="i.name" ng-show="!edit"></span>
         <input ng-model="i.name" ng-show="edit" type="text">
@@ -30,7 +59,7 @@
           stop editing
         </a>
       </td>
-      <td><a ng-click="removeItem(i.id)">delete</a></td>
+      <td><a ng-click="removeItem($index)">delete</a></td>
     </tr>
   </tbody>
 </table>

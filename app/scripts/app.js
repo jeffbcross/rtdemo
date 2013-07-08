@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('RTDemoApp', ['firebase', 'SyncResource', 'SyncDeployd'])
+angular.module('RTDemoApp', ['firebase', 'SyncResource'])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
@@ -22,6 +22,10 @@ angular.module('RTDemoApp', ['firebase', 'SyncResource', 'SyncDeployd'])
       .when('/spreadsheet', {
         templateUrl: 'views/spreadsheet.html',
         controller: 'SpreadsheetCtrl'
+      })
+      .when('/arduino', {
+        templateUrl: 'views/arduino.html',
+        controller: 'ArduinoCtrl'
       })
       .otherwise({
         redirectTo: '/'
