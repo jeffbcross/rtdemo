@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('RTDemoApp')
-  .controller('SpreadsheetCtrl', function ($scope, $syncResource, $differ, $checkArrayForDupe, syncDeployd, syncFirebase) {
+  .controller('SpreadsheetCtrl', function ($scope, $syncResource, $differ, syncDeployd, syncFirebase) {
     var protocol, syncer;
 
     $scope.protocols = [
@@ -49,7 +49,8 @@ angular.module('RTDemoApp')
         query: p.query,
         model: 'items',
         type: 'collection',
-        onProtocolChange: [$differ.determineDelta, $checkArrayForDupe, function (binder, delta, next) {
+        onModelChange: [$differ.compareArrays, $differ.checkArrayForDupe],
+        onProtocolChange: [$differ.compareArrays, $differ.checkArrayForDupe, function (binder, delta, next) {
           console.log('dupe?', delta.duplicate);
           if (!delta.duplicate) next();
         }]
